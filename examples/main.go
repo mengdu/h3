@@ -95,9 +95,4 @@ func req() {
 
 func main() {
 	req()
-	// u, err := url.Parse("https://localhost:3000/?a=1&b=2")
-	// fmt.Println(err, u)
-	// p, err := url.JoinPath("https://localhost:3000/v1?a=234", "/api", "/a/b/c")
-	// fmt.Println(err, p)
-	// fmt.Println(baseUrl("https://localhost:3000/v1?a=234", "/api/test?a=0&b=123&c=456&d=中文"))
 }

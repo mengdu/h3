@@ -1,6 +1,6 @@
 # H3
 
-A http client for golang.
+A simple encapsulation of Golang HTTP client.
 
 ```go
 package demo
@@ -33,5 +33,6 @@ func main() {
 	}
 	fmt.Printf("%#v\n", data)
 }
-
 ```
+
+[More examples](./examples/)

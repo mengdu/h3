@@ -1,6 +1,7 @@
 package h3
 
 import (
+	"io"
 	"net/http"
 	"net/url"
 	"time"
@@ -11,9 +12,10 @@ type Client struct {
 	BaseHeader http.Header
 	BaseParams url.Values
 
-	client   *http.Client
-	onBefore func(req *http.Request) error
-	onAfter  func(res *Response) error
+	client     *http.Client
+	onBefore   func(req *http.Request) error
+	onAfter    func(res *Response) error
+	enableDump bool
 }
 
 func New() *Client {
@@ -34,6 +36,10 @@ func (c *Client) SetTimeout(timeout time.Duration) {
 
 func (c *Client) SetJar(jar http.CookieJar) {
 	c.client.Jar = jar
+}
+
+func (c *Client) SetDump(enable bool) {
+	c.enableDump = enable
 }
 
 func (c *Client) OnBefore(fn func(req *http.Request) error) {
@@ -69,5 +75,36 @@ func (c *Client) OnAfter(fn func(res *Response) error) {
 func (c *Client) Req(method string, path string) *Request {
 	req := NewRequest(method, path)
 	req.Client = c
+	req.Dump = c.enableDump
 	return req
+}
+
+func (c Client) Get(path string) *Request {
+	return c.Req("GET", path)
+}
+
+func (c Client) Post(path string, body io.Reader) *Request {
+	req := c.Req("POST", path)
+	req.Body = body
+	return req
+}
+
+func (c Client) Put(path string, body io.Reader) *Request {
+	req := c.Req("PUT", path)
+	req.Body = body
+	return req
+}
+
+func (c Client) Patch(path string, body io.Reader) *Request {
+	req := c.Req("PATCH", path)
+	req.Body = body
+	return req
+}
+
+func (c Client) Delete(path string) *Request {
+	return c.Req("DELETE", path)
+}
+
+func (c Client) Head(path string) *Request {
+	return c.Req("HEAD", path)
 }

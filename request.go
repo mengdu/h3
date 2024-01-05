@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	userAgent = "h3/1.0 (github.com/mengdu/h3)"
+	userAgent = "h3/0.1.0 (github.com/mengdu/h3)"
 )
 
 type Request struct {
@@ -70,7 +70,7 @@ func (r *Request) Do() (res *Response, err error) {
 		if err != nil {
 			return nil, err
 		}
-		fmt.Printf("%s\r\n", dump)
+		fmt.Printf("%s", dump)
 	}
 
 	response, err := c.client.Do(request)
@@ -205,7 +205,7 @@ func dumpRequest(req *http.Request, enableColor bool) (string, error) {
 		headerString(req.Header, enableColor),
 	}
 	if body != "" {
-		strs = append(strs, "\r\n"+body+"\r\n")
+		strs = append(strs, "\r\n"+body+"\r\n\r\n")
 	} else {
 		strs = append(strs, "\r\n")
 	}
